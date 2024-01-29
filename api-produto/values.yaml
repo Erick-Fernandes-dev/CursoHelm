@@ -1,0 +1,13 @@
+api:
+  image: fabricioveronez/pedelogo-catalogo
+  serviceType: LoadBalancer
+  ingress: ["simpleapi.com.br", "apiprodutos.com.br", "api.aulakubedev.com.br"]
+
+mongodb:
+  auth:
+    rootPassword: mongoRoot
+    username: mongouser
+    password: mongopwd
+    database: produto
+  persistence:
+    enabled: true

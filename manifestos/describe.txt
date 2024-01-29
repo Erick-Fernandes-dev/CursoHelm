@@ -1,0 +1,79 @@
+Name:             api-86bbb57db6-hgct5
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             worker-2/192.168.56.112
+Start Time:       Mon, 22 Jan 2024 16:54:13 -0300
+Labels:           app=api
+                  pod-template-hash=86bbb57db6
+Annotations:      <none>
+Status:           Pending
+IP:               10.244.2.52
+IPs:
+  IP:           10.244.2.52
+Controlled By:  ReplicaSet/api-86bbb57db6
+Containers:
+  api:
+    Container ID:   
+    Image:          fabricioveronez/pedelogo-catalogo:v1.0.0
+    Image ID:       
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       ErrImagePull
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  64Mi
+    Requests:
+      cpu:     500m
+      memory:  32Mi
+    Environment:
+      Mongo__User:      mongouser
+      Mongo__Password:  mongopwd
+      Mongo__Host:      mongo-service
+      Mongo__Database:  admin
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7nxq7 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-7nxq7:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason       Age                From               Message
+  ----     ------       ----               ----               -------
+  Normal   Scheduled    63s                default-scheduler  Successfully assigned default/api-86bbb57db6-hgct5 to worker-2
+  Warning  FailedMount  62s                kubelet            MountVolume.SetUp failed for volume "kube-api-access-7nxq7" : failed to sync configmap cache: timed out waiting for the condition
+  Normal   Pulling      18s (x3 over 61s)  kubelet            Pulling image "fabricioveronez/pedelogo-catalogo:v1.0.0"
+  Warning  Failed       17s (x3 over 60s)  kubelet            Failed to pull image "fabricioveronez/pedelogo-catalogo:v1.0.0": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/fabricioveronez/pedelogo-catalogo:v1.0.0": failed to resolve reference "docker.io/fabricioveronez/pedelogo-catalogo:v1.0.0": docker.io/fabricioveronez/pedelogo-catalogo:v1.0.0: not found
+  Warning  Failed       17s (x3 over 60s)  kubelet            Error: ErrImagePull
+  Normal   BackOff      2s (x3 over 59s)   kubelet            Back-off pulling image "fabricioveronez/pedelogo-catalogo:v1.0.0"
+  Warning  Failed       2s (x3 over 59s)   kubelet            Error: ImagePullBackOff
+
+
+api:
+  image: fabricioveronez/pedelogo-catalogo
+  serviceType: LoadBalancer
+  ingress: ["simpleapi.com.br", "apiprodutos.com.br", "api.aulakubedev.com.br"]
+
+mongodb:
+  tag: 4.2.8
+  #existSecret: nome do secret
+  credentials:
+    userName: mongouser
+    userPassword: mongopwd
+  databaseName: admin

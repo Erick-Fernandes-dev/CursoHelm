@@ -1,0 +1,2 @@
+Instalar os manifesto, enquanto ele espera
+helm install minhaapi api-produto --wait
